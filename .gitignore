@@ -3,6 +3,8 @@
 
 **/bin
 **/obj
+**/Migrations
+**/*.db
 
 **/node_modules
 /.pnp
