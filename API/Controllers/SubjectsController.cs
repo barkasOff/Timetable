@@ -1,25 +1,31 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Application.Subjects;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Persistence;
 
 namespace API.Controllers
 {
-    public class SubjectsController : BaseController
+  public class SubjectsController : BaseController
+  {
+    [HttpGet]
+    public async Task<ActionResult<List<Subject>>> GetSubjects() =>
+      await Mediator.Send(new List.Query());
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Subject>> GetSubject(Guid id) =>
+      await Mediator.Send((new Details.Query { Id = id }));
+    [HttpPost]
+    public async Task<IActionResult> AddSubject(Subject subject) =>
+      Ok(await Mediator.Send(new Create.Command { Subject = subject }));
+    [HttpPut("{id}")]
+    public async Task<IActionResult> EditSubject(Guid id, Subject subject)
     {
-        private readonly DataContext _context;
-
-        public SubjectsController(DataContext context) =>
-            _context = context;
-
-        [HttpGet]
-        public async Task<ActionResult<List<Subject>>> GetSubjects() =>
-            await _context.Subjects.ToListAsync();
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Subject>> GetSubject(Guid id) =>
-            await _context.Subjects.FindAsync(id);
+      subject.Id = id;
+      return (Ok(await Mediator.Send(new Edit.Command { Subject = subject })));
     }
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteSubject(Guid id) =>
+      Ok(await Mediator.Send(new Delete.Command { Id = id }));
+  }
 }
