@@ -1,4 +1,7 @@
 using API.Extensions;
+using API.Middleware;
+using Application.Subjects;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -16,15 +19,13 @@ namespace API
 
     public void ConfigureServices(IServiceCollection services)
     {
-      services.AddControllers();
+      services.AddControllers().AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<Create>());
       services.AddApplicationServices(_config);
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-      if (env.IsDevelopment())
-        app.UseDeveloperExceptionPage();
-
+      app.UseMiddleware<ExtentionMiddleware>();
       app.UseRouting();
       app.UseCors("CorsPolicy");
       app.UseAuthorization();
