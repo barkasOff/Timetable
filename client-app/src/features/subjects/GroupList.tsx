@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import agent from "../../app/api/agent";
-import LoadingComponents from "../../app/layout/LoadingComponents";
+import Loading from "../../app/layout/Loading/Loading";
 import { IDay, IGroup, ISubject, IWeek } from "../../app/models/group";
 
 const SubjectList: React.FC = () => {
@@ -16,28 +16,18 @@ const SubjectList: React.FC = () => {
   }, []);
 
   const renderSubjects = (subject: ISubject) => (
-    <table key={subject.id}>
-      <thead>
-        <tr>
-          <th>Дисциплина</th>
-          <th>Кабинет</th>
-          <th>Здание</th>
-          <th>Тип</th>
-        </tr>
-      </thead>
-        <tbody>
-          <tr>
-            <td>{subject.discipline}</td>
-            <td>{subject.cabinet}</td>
-            <td>{subject.building}</td>
-            <td>{subject.type}</td>
-          </tr>
-        </tbody>
-    </table>
+    <div key={subject.id} className="group__subjects">
+      <div className="group__subject">{subject.discipline}</div>
+      <div className="group__subject">{subject.cabinet}</div>
+      <div className="group__subject">{subject.building}</div>
+      <div className="group__subject">{subject.type}</div>
+    </div>
   );
-  const renderDays = (day: IDay) => (
-    <td key={day.id}>{day.subjects.map(renderSubjects)}</td>
-  );
+  const renderDays = (day: IDay) => {
+    if (day.name === 'Понедельник') {
+      return <div key={day.id}>{day.subjects.map(renderSubjects)}</div>
+    }
+  };
   const renderWeeks = (week: IWeek) => {
     week.days.sort((a, b) => (getDay(a.name) - getDay(b.name)));
     return (week.days.map(renderDays));
@@ -60,29 +50,35 @@ const SubjectList: React.FC = () => {
   }
 
   if (loading) {
-    return <LoadingComponents />;
+    return <Loading content='Загрузка...' />;
   }
   return (
-    <>
-      {groups.map(group => (
-        <table key={group.id}>
-          <caption>{group.number}</caption>
-          <thead>
-            <tr>
-              <th>Понедельник</th>
-              <th>Вторник</th>
-              <th>Среда</th>
-              <th>Четверг</th>
-              <th>Пятница</th>
-              <th>Суббота</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>{group.weeks.map(renderWeeks)}</tr>
-          </tbody>
-        </table>
-      ))}
-    </>
+    <section className="group">
+      <div className="container">
+        {groups.map(group => (
+          <div key={group.id} className="group__table">
+            <div className="group__title">
+              {group.number}
+            </div>
+            <div className="group__subtitles">
+                <div className="group__subtitle group__subtitle-active">Понедельник</div>
+                <div className="group__subtitle">Вторник</div>
+                <div className="group__subtitle">Среда</div>
+                <div className="group__subtitle">Четверг</div>
+                <div className="group__subtitle">Пятница</div>
+                <div className="group__subtitle">Суббота</div>
+            </div>
+            <div className="group__cols group__subtitles">
+              <div className="group__col">Дисциплина</div>
+              <div className="group__col">Кабинет</div>
+              <div className="group__col">Здание</div>
+              <div className="group__col">Тип</div>
+            </div>
+            {group.weeks.map(renderWeeks)}
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
 

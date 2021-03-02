@@ -1,9 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;900&display=swap');
+html {
+  background-color: rgb(182, 214, 233);
+}
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-weight: 300;
+  font-family: 'Roboto', sans-serif;
+  position: relative;
 }
 .container {
-  width: 1140px;
+  width: 1440px;
   margin: 0 auto;
 }
+
+@import '../../features/subjects/groupList';
+@import './Loading/loading';

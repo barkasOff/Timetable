@@ -51,33 +51,12 @@ namespace Persistence
                       Type = "Практика"
                     },
                   }
-                }
-              }
-            }
-          }
-        },
-        new Group
-        {
-          Number = "4341",
-          Weeks = new List<Week>
-          {
-            new Week
-            {
-              IsEven = true,
-              Days = new List<Day>
-              {
+                },
                 new Day
                 {
-                  Name = "Понедельник",
+                  Name = "Среда",
                   Subjects = new List<Subject>
                   {
-                    new Subject
-                    {
-                      Discipline = "Безопасность жизнедеятельности",
-                      Cabinet = 419,
-                      Building = 5,
-                      Type = "Практика"
-                    },
                     new Subject
                     {
                       Discipline = "Безопасность жизнедеятельности",
@@ -85,65 +64,44 @@ namespace Persistence
                       Building = 7,
                       Type = "Практика"
                     },
-                    new Subject
-                    {
-                      Discipline = "Технология разработки программного обеспечения",
-                      Cabinet = 422,
-                      Building = 5,
-                      Type = "Лекция"
-                    },
+                  }
+                },
+                new Day
+                {
+                  Name = "Четверг",
+                  Subjects = new List<Subject>
+                  {
                     new Subject
                     {
                       Discipline = "Безопасность жизнедеятельности",
+                      Cabinet = 410,
+                      Building = 7,
+                      Type = "Практика"
+                    },
+                  }
+                },
+                new Day
+                {
+                  Name = "Пятница",
+                  Subjects = new List<Subject>
+                  {
+                    new Subject
+                    {
+                      Discipline = "Технология разработки программного обеспечения",
                       Cabinet = 422,
                       Building = 5,
                       Type = "Лекция"
                     },
                   }
-                }
-              }
-            }
-          }
-        },
-        new Group
-        {
-          Number = "4338",
-          Weeks = new List<Week>
-          {
-            new Week
-            {
-              IsEven = true,
-              Days = new List<Day>
-              {
+                },
                 new Day
                 {
-                  Name = "Понедельник",
+                  Name = "Суббота",
                   Subjects = new List<Subject>
                   {
                     new Subject
                     {
-                      Discipline = "Безопасность жизнедеятельности",
-                      Cabinet = 419,
-                      Building = 5,
-                      Type = "Практика"
-                    },
-                    new Subject
-                    {
-                      Discipline = "Безопасность жизнедеятельности",
-                      Cabinet = 410,
-                      Building = 7,
-                      Type = "Практика"
-                    },
-                    new Subject
-                    {
                       Discipline = "Технология разработки программного обеспечения",
-                      Cabinet = 422,
-                      Building = 5,
-                      Type = "Лекция"
-                    },
-                    new Subject
-                    {
-                      Discipline = "Безопасность жизнедеятельности",
                       Cabinet = 422,
                       Building = 5,
                       Type = "Лекция"
