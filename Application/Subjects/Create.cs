@@ -12,12 +12,12 @@ namespace Application.Subjects
   {
     public class Command : IRequest<Result<Unit>>
     {
-      public Subject Subject { get; set; }
+      public Group Group { get; set; }
     }
     public class CommandValidator : AbstractValidator<Command>
     {
       public CommandValidator() =>
-          RuleFor(x => x.Subject).SetValidator(new SubjectValidator());
+          RuleFor(x => x.Group).SetValidator(new GroupValidator());
     }
     public class Handler : IRequestHandler<Command, Result<Unit>>
     {
@@ -28,7 +28,7 @@ namespace Application.Subjects
 
       public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
       {
-        _context.Add(request.Subject);
+        _context.Add(request.Group);
 
         var result = await _context.SaveChangesAsync() > 0;
 

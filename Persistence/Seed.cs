@@ -9,54 +9,161 @@ namespace Persistence
   {
     public static async Task SeedDataAsync(DataContext context)
     {
-      if (context.Subjects.Any())
+      if (context.Groups.Any())
         return;
 
-      var subjects = new List<Subject>
+      var groups = new List<Group>
       {
-        new Subject
+        new Group
         {
-          Discipline = "Безопасность жизнедеятельности",
-          Cabinet = 419,
-          Building = 5,
-          Week = true,
-          Day = "Понедельник",
-          Type = "Практика",
-          Teacher = "Калини Владимир Юрьевич"
+          Number = "4343",
+          Weeks = new List<Week>
+          {
+            new Week
+            {
+              IsEven = true,
+              Days = new List<Day>
+              {
+                new Day
+                {
+                  Name = "Понедельник",
+                  Subjects = new List<Subject>
+                  {
+                    new Subject
+                    {
+                      Discipline = "Безопасность жизнедеятельности",
+                      Cabinet = 419,
+                      Building = 5,
+                      Type = "Практика"
+                    },
+                    new Subject
+                    {
+                      Discipline = "Безопасность жизнедеятельности",
+                      Cabinet = 410,
+                      Building = 7,
+                      Type = "Практика"
+                    },
+                    new Subject
+                    {
+                      Discipline = "Технология разработки программного обеспечения",
+                      Cabinet = 422,
+                      Building = 5,
+                      Type = "Лекция"
+                    },
+                    new Subject
+                    {
+                      Discipline = "Безопасность жизнедеятельности",
+                      Cabinet = 422,
+                      Building = 5,
+                      Type = "Лекция"
+                    },
+                  }
+                }
+              }
+            }
+          }
         },
-        new Subject
+        new Group
         {
-          Discipline = "Безопасность жизнедеятельности",
-          Cabinet = 410,
-          Building = 7,
-          Week = false,
-          Day = "Понедельник",
-          Type = "Практика",
-          Teacher = "Калини Владимир Юрьевич"
+          Number = "4341",
+          Weeks = new List<Week>
+          {
+            new Week
+            {
+              IsEven = true,
+              Days = new List<Day>
+              {
+                new Day
+                {
+                  Name = "Понедельник",
+                  Subjects = new List<Subject>
+                  {
+                    new Subject
+                    {
+                      Discipline = "Безопасность жизнедеятельности",
+                      Cabinet = 419,
+                      Building = 5,
+                      Type = "Практика"
+                    },
+                    new Subject
+                    {
+                      Discipline = "Безопасность жизнедеятельности",
+                      Cabinet = 410,
+                      Building = 7,
+                      Type = "Практика"
+                    },
+                    new Subject
+                    {
+                      Discipline = "Технология разработки программного обеспечения",
+                      Cabinet = 422,
+                      Building = 5,
+                      Type = "Лекция"
+                    },
+                    new Subject
+                    {
+                      Discipline = "Безопасность жизнедеятельности",
+                      Cabinet = 422,
+                      Building = 5,
+                      Type = "Лекция"
+                    },
+                  }
+                }
+              }
+            }
+          }
         },
-        new Subject
+        new Group
         {
-          Discipline = "Технология разработки программного обеспечения",
-          Cabinet = 422,
-          Building = 5,
-          Week = false,
-          Day = "Понедельник",
-          Type = "Лекция",
-          Teacher = "Александров Андрей Юрьевич"
-        },
-        new Subject
-        {
-          Discipline = "Безопасность жизнедеятельности",
-          Cabinet = 422,
-          Building = 5,
-          Week = false,
-          Day = "Понедельник",
-          Type = "Лекция",
-          Teacher = "Калини Владимир Юрьевич"
-        },
-    };
+          Number = "4338",
+          Weeks = new List<Week>
+          {
+            new Week
+            {
+              IsEven = true,
+              Days = new List<Day>
+              {
+                new Day
+                {
+                  Name = "Понедельник",
+                  Subjects = new List<Subject>
+                  {
+                    new Subject
+                    {
+                      Discipline = "Безопасность жизнедеятельности",
+                      Cabinet = 419,
+                      Building = 5,
+                      Type = "Практика"
+                    },
+                    new Subject
+                    {
+                      Discipline = "Безопасность жизнедеятельности",
+                      Cabinet = 410,
+                      Building = 7,
+                      Type = "Практика"
+                    },
+                    new Subject
+                    {
+                      Discipline = "Технология разработки программного обеспечения",
+                      Cabinet = 422,
+                      Building = 5,
+                      Type = "Лекция"
+                    },
+                    new Subject
+                    {
+                      Discipline = "Безопасность жизнедеятельности",
+                      Cabinet = 422,
+                      Building = 5,
+                      Type = "Лекция"
+                    },
+                  }
+                }
+              }
+            }
+          }
+        }
+      };
 
-      await context.Subjects.AddRangeAsync(subjects);
+      await context.Groups.AddRangeAsync(groups);
       await context.SaveChangesAsync();
     }
   }

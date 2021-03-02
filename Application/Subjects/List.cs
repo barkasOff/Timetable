@@ -11,16 +11,20 @@ namespace Application.Subjects
 {
   public class List
   {
-    public class Query : IRequest<Result<List<Subject>>> { }
-    public class Handler : IRequestHandler<Query, Result<List<Subject>>>
+    public class Query : IRequest<Result<List<Group>>> { }
+    public class Handler : IRequestHandler<Query, Result<List<Group>>>
     {
       private readonly DataContext _context;
 
       public Handler(DataContext context) =>
         _context = context;
 
-      public async Task<Result<List<Subject>>> Handle(Query request, CancellationToken cancellationToken) =>
-        Result<List<Subject>>.Success(await _context.Subjects.ToListAsync());
+      public async Task<Result<List<Group>>> Handle(Query request, CancellationToken cancellationToken) =>
+        Result<List<Group>>.Success(await _context.Groups
+          .Include(x => x.Weeks)
+          .ThenInclude(x => x.Days)
+          .ThenInclude(x => x.Subjects)
+          .ToListAsync());
     }
   }
 }

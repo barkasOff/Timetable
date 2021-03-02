@@ -22,11 +22,11 @@ namespace Application.Subjects
 
       public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
       {
-        var subject = await _context.Subjects.FindAsync(request.Id);
+        var subject = await _context.Groups.FindAsync(request.Id);
 
         if (subject == null)
           return (null);
-        _context.Subjects.Remove(subject);
+        _context.Groups.Remove(subject);
 
         var result = await _context.SaveChangesAsync() > 0;
 

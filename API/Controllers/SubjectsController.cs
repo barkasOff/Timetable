@@ -15,13 +15,13 @@ namespace API.Controllers
     public async Task<IActionResult> GetSubject(Guid id) =>
       HandleResult(await Mediator.Send((new Details.Query { Id = id })));
     [HttpPost]
-    public async Task<IActionResult> AddSubject(Subject subject) =>
-      HandleResult(await Mediator.Send(new Create.Command { Subject = subject }));
+    public async Task<IActionResult> AddSubject(Group group) =>
+      HandleResult(await Mediator.Send(new Create.Command { Group = group }));
     [HttpPut("{id}")]
-    public async Task<IActionResult> EditSubject(Guid id, Subject subject)
+    public async Task<IActionResult> EditSubject(Guid id, Group group)
     {
-      subject.Id = id;
-      return (HandleResult(await Mediator.Send(new Edit.Command { Subject = subject })));
+      group.Id = id;
+      return (HandleResult(await Mediator.Send(new Edit.Command { Group = group })));
     }
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteSubject(Guid id) =>
