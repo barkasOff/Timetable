@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Application.Core;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 namespace Application.Subjects
@@ -22,11 +23,16 @@ namespace Application.Subjects
 
       public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
       {
-        var subject = await _context.Groups.FindAsync(request.Id);
+        var groups = await _context.Groups
+          .Include(x => x.Weeks)
+          .ThenInclude(x => x.Days)
+          .ThenInclude(x => x.Subjects)
+          .ToListAsync();
+        var group = await Task.Run(() => groups.Find(x => x.Id == request.Id));
 
-        if (subject == null)
+        if (group == null)
           return (null);
-        _context.Groups.Remove(subject);
+        _context.Groups.Remove(group);
 
         var result = await _context.SaveChangesAsync() > 0;
 

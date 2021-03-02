@@ -5,7 +5,7 @@ const HomePage : React.FC = () => {
   return (
     <>
       <h1>Timetable</h1>
-      <Link to='/subjects'>Моё расписание</Link>
+      <Link to='/groups'>Моё расписание</Link>
     </>
   );
 }

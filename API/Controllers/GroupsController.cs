@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-  public class SubjectsController : BaseController
+  public class GroupsController : BaseController
   {
     [HttpGet]
     public async Task<IActionResult> GetSubjects() =>

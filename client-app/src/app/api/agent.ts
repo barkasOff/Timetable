@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { ISubject } from '../models/subject';
+import { IGroup } from '../models/group';
 
 axios.defaults.baseURL = 'http://localhost:5000/timetable';
 
@@ -28,16 +28,16 @@ const requests = {
   delete: <T>(url: string) => axios.delete<T>(url).then(responseBody)
 }
 
-const Subjects = {
-  list: () => requests.get<ISubject[]>('/subjects'),
-  details: (id: string) => requests.get<ISubject>(`/subjects/${id}`),
-  create: (subject: ISubject) => requests.post<void>('/subjects', subject),
-  edit: (subject: ISubject) => requests.put<void>('/subjects', subject),
-  delete: (id: string) => requests.delete<void>(`/subjects/${id}`),
+const Groups = {
+  list: () => requests.get<IGroup[]>('/groups'),
+  details: (id: string) => requests.get<IGroup>(`/groups/${id}`),
+  create: (group: IGroup) => requests.post<void>('/groups', group),
+  edit: (group: IGroup) => requests.put<void>('/groups', group),
+  delete: (id: string) => requests.delete<void>(`/groups/${id}`),
 }
 
 const agent = {
-  Subjects
+  Groups
 }
 
 export default agent;

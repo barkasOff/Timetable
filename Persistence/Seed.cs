@@ -35,27 +35,20 @@ namespace Persistence
                       Cabinet = 419,
                       Building = 5,
                       Type = "Практика"
-                    },
+                    }
+                  }
+                },
+                new Day
+                {
+                  Name = "Вторник",
+                  Subjects = new List<Subject>
+                  {
                     new Subject
                     {
                       Discipline = "Безопасность жизнедеятельности",
                       Cabinet = 410,
                       Building = 7,
                       Type = "Практика"
-                    },
-                    new Subject
-                    {
-                      Discipline = "Технология разработки программного обеспечения",
-                      Cabinet = 422,
-                      Building = 5,
-                      Type = "Лекция"
-                    },
-                    new Subject
-                    {
-                      Discipline = "Безопасность жизнедеятельности",
-                      Cabinet = 422,
-                      Building = 5,
-                      Type = "Лекция"
                     },
                   }
                 }
