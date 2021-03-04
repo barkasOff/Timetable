@@ -17,10 +17,10 @@ const App: React.FC = () => {
       });
   }, []);
 
-  const addSelectDay = (id: string) => {
+  const selectDay = (id: string) => {
     setSelectedDay(groups.flatMap(g => g.days).find(d => d.id == id));
   };
-  const removeSelectDay = () => {
+  const cancelDay = () => {
     setSelectedDay(undefined);
   };
   const selectGroup = (id: string) => {
@@ -35,9 +35,9 @@ const App: React.FC = () => {
       <GroupDashboard
         groups={groups}
         loading={loading}
-        selectedDay={selectedDay}
-        addDay={addSelectDay}
-        removeDay={removeSelectDay}
+        day={selectedDay}
+        selectDay={selectDay}
+        cancelDay={cancelDay}
         group={selectedGroup}
         selectGroup={selectGroup}
         cancelGroup={cancelSelectGroup} />

@@ -11,6 +11,7 @@ const GroupList: React.FC<IProps> = ({groups, selectGroup}: IProps) => {
     <div className="group__list">
       {groups.map(group => (
         <div
+          key={group.id}
           className="group__item"
           onClick={() => selectGroup(group.id)}>
           {group.number}

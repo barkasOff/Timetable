@@ -7,15 +7,15 @@ import GroupList from './GroupList';
 interface IProps {
   groups: IGroup[];
   loading: boolean;
-  selectedDay: IDay | undefined;
-  addDay: (id: string) => void;
-  removeDay: () => void;
+  day: IDay | undefined;
+  selectDay: (id: string) => void;
+  cancelDay: () => void;
   group: IGroup | undefined;
   selectGroup: (id: string) => void;
   cancelGroup: () => void;
 }
 
-const GroupDashboard: React.FC<IProps> = ({groups, loading, addDay, removeDay, selectedDay, group, selectGroup, cancelGroup}: IProps) => {
+const GroupDashboard: React.FC<IProps> = ({groups, loading, selectDay, cancelDay, day, group, selectGroup, cancelGroup}: IProps) => {
   if (loading) {
     return <Loading content='Загрузка...' />
   }
@@ -25,7 +25,12 @@ const GroupDashboard: React.FC<IProps> = ({groups, loading, addDay, removeDay, s
         <GroupList
           groups={groups}
           selectGroup={selectGroup} />
-        <GroupDetails group={group} cancelGroup={cancelGroup} />
+        {group &&
+        <GroupDetails
+          group={group}
+          cancelGroup={cancelGroup}
+          day={day}
+          selectDay={selectDay} />}
       </div>
     </div>
   );

@@ -1,21 +1,82 @@
 .group {
-  &__wrapper {
-    display: grid;
-    grid-template-areas:  "header header header"
-                          "descr descr info"
-                          "content content info";
-    grid-template-columns: 1fr 1fr 1fr;
+  margin-top: 20px;
+  &__list {
+    margin-left: 15px;
+  }
+  &__item {
+    font-size: 32px;
+    font-weight: 500;
+    color: #000;
+    cursor: pointer;
   }
   &__header {
-    grid-area: header;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 25%;
   }
-  &__descr {
-    grid-area: descr;
+  &__title {
+    margin-left: 15px;
+    font-size: 40px;
+    font-weight: 900;
   }
-  &__info {
-    grid-area: info;
+  &__days {
+    margin-top: 7px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid black;
+    border-bottom: none;
+  }
+  &__day {
+    padding: 3px;
+    width: 100%;
+    font-size: 18px;
+    text-align: center;
+    font-weight: 500;
+    text-decoration: underline;
+    cursor: pointer;
+    background-color: rgb(15, 134, 202);
+    &-active {
+      background-color: rgb(0, 158, 250);
+    }
   }
   &__content {
-    grid-area: content;
+    padding: 5px 0;
+    width: 100%;
+    border: 1px solid #000;
+    border-top: none;
+  }
+  &__sub-head {
+    width: 100%;
+  }
+  &__params, &__subjects {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 2fr 0.33fr 0.33fr 0.33fr;
+  }
+  &__params {
+    margin-bottom: 5px;
+  }
+  &__param {
+    width: 100%;
+    text-align: center;
+    font-weight: 500;
+    font-size: 16px;
+  }
+  &__subject {
+    width: 100%;
+    text-align: center;
+  }
+  &__empty {
+    width: 100%;
+    font-weight: 500;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #000;
+    border-top: none;
   }
 }
