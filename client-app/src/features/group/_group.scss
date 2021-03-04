@@ -1,0 +1,21 @@
+.group {
+  &__wrapper {
+    display: grid;
+    grid-template-areas:  "header header header"
+                          "descr descr info"
+                          "content content info";
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  &__header {
+    grid-area: header;
+  }
+  &__descr {
+    grid-area: descr;
+  }
+  &__info {
+    grid-area: info;
+  }
+  &__content {
+    grid-area: content;
+  }
+}

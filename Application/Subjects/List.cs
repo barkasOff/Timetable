@@ -21,8 +21,7 @@ namespace Application.Subjects
 
       public async Task<Result<List<Group>>> Handle(Query request, CancellationToken cancellationToken) =>
         Result<List<Group>>.Success(await _context.Groups
-          .Include(x => x.Weeks)
-          .ThenInclude(x => x.Days)
+          .Include(x => x.Days)
           .ThenInclude(x => x.Subjects)
           .ToListAsync());
     }

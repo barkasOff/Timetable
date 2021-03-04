@@ -8,7 +8,7 @@ namespace Application.Subjects
     public GroupValidator()
     {
       RuleFor(x => x.Number).NotEmpty();
-      RuleFor(x => x.Weeks).NotEmpty();
+      RuleFor(x => x.Days).NotEmpty();
     }
   }
 }

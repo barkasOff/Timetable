@@ -7,6 +7,6 @@ namespace Domain
   {
     public Guid Id { get; set; }
     public string Number { get; set; }
-    public ICollection<Week> Weeks { get; set; }
+    public ICollection<Day> Days { get; set; }
   }
 }

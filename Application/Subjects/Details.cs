@@ -24,8 +24,7 @@ namespace Application.Subjects
       public async Task<Result<Group>> Handle(Query request, CancellationToken cancellationToken)
       {
         var groups = await _context.Groups
-          .Include(x => x.Weeks)
-          .ThenInclude(x => x.Days)
+          .Include(x => x.Days)
           .ThenInclude(x => x.Subjects)
           .ToListAsync();
         var group = await Task.Run(() => groups.Find(x => x.Id == request.Id));
