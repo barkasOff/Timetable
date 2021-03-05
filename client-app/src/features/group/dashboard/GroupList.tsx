@@ -1,12 +1,11 @@
+import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { IGroup } from '../../../app/models/group';
+import { useStore } from '../../../app/stores/store';
 
-interface IProps {
-  groups: IGroup[];
-  selectGroup: (id: string) => void;
-}
-
-const GroupList: React.FC<IProps> = ({groups, selectGroup}: IProps) => {
+const GroupList: React.FC = () => {
+  const { subjectStore } = useStore(),
+        { groups, selectGroup } = subjectStore;
+        
   return (
     <div className="group__list">
       {groups.map(group => (
@@ -21,4 +20,4 @@ const GroupList: React.FC<IProps> = ({groups, selectGroup}: IProps) => {
   );
 };
 
-export default  GroupList;
+export default  observer(GroupList);

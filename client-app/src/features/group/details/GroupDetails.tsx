@@ -1,10 +1,11 @@
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { IDay, IGroup } from '../../../app/models/group';
+import { useStore } from '../../../app/stores/store';
 import GroupContent from './GroupContent';
 
 interface IProps {
   group: IGroup | undefined;
-  cancelGroup: () => void;
   day: IDay | undefined;
   selectDay: (id: string) => void;
 }
@@ -22,9 +23,13 @@ const dayInit = ({group, day, selectDay}: IProps, dayName: string) => {
     {dayName}</div>
   );
 }
-const GroupDetails: React.FC<IProps> = ({group, cancelGroup, day, selectDay}: IProps) => {
+const GroupDetails: React.FC = () => {
+  const { subjectStore } = useStore(),
+        { selectDay, selectedDay: day, selectedGroup: group, cancelSelectGroup: cancelGroup } = subjectStore;
+
+  if (!group) return <></>;
   if (!day) {
-    day = group!.days.find(d => d.name == 'Понедельник');
+    selectDay(group!.days.find(d => d.name == 'Понедельник')?.id ?? '');
   }
   return (
     <>
@@ -36,16 +41,16 @@ const GroupDetails: React.FC<IProps> = ({group, cancelGroup, day, selectDay}: IP
           Назад</button>
       </div>
       <div className="group__days">
-        {dayInit({group, cancelGroup, day, selectDay}, 'Понедельник')}
-        {dayInit({group, cancelGroup, day, selectDay}, 'Вторник')}
-        {dayInit({group, cancelGroup, day, selectDay}, 'Среда')}
-        {dayInit({group, cancelGroup, day, selectDay}, 'Четверг')}
-        {dayInit({group, cancelGroup, day, selectDay}, 'Пятница')}
-        {dayInit({group, cancelGroup, day, selectDay}, 'Суббота')}
+        {dayInit({group, day, selectDay}, 'Понедельник')}
+        {dayInit({group, day, selectDay}, 'Вторник')}
+        {dayInit({group, day, selectDay}, 'Среда')}
+        {dayInit({group, day, selectDay}, 'Четверг')}
+        {dayInit({group, day, selectDay}, 'Пятница')}
+        {dayInit({group, day, selectDay}, 'Суббота')}
       </div>
-      <GroupContent day={day} />
+      <GroupContent />
     </>
   );
 };
 
-export default  GroupDetails;
+export default  observer(GroupDetails);

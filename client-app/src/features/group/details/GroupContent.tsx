@@ -1,9 +1,7 @@
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { IDay, ISubject } from '../../../app/models/group';
-
-interface IProps {
-  day: IDay | undefined
-}
+import { useStore } from '../../../app/stores/store';
 
 const getSubject = (subject: ISubject) => {
   return (
@@ -15,8 +13,10 @@ const getSubject = (subject: ISubject) => {
     </tr>
   );
 };
-const GroupContent: React.FC<IProps> = ({day}: IProps) => {
-  if (!day) {
+const GroupContent: React.FC = () => {
+  const { subjectStore } = useStore();
+  
+  if (!subjectStore.selectedDay) {
     return <div className="group__empty">Расписание отсутствует...</div>;
   }
   return (
@@ -30,10 +30,10 @@ const GroupContent: React.FC<IProps> = ({day}: IProps) => {
         </tr>
       </thead>
       <tbody className="group__sub-body">
-        {day.subjects.map(getSubject)}
+        {subjectStore.selectedDay.subjects.map(getSubject)}
       </tbody>
     </table>
   );
 };
 
-export default  GroupContent;
+export default  observer(GroupContent);
