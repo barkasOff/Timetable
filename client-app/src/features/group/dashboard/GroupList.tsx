@@ -1,20 +1,20 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useStore } from '../../../app/stores/store';
 
 const GroupList: React.FC = () => {
-  const { subjectStore } = useStore(),
-        { groups, selectGroup } = subjectStore;
+  const { subjectStore } = useStore();
         
   return (
     <div className="group__list">
-      {groups.map(group => (
-        <div
+      {subjectStore.getGroups.map(group => (
+        <Link
           key={group.id}
           className="group__item"
-          onClick={() => selectGroup(group.id)}>
+          to={`/groups/${group.id}`}>
           {group.number}
-        </div>
+        </Link>
       ))}
     </div>
   );

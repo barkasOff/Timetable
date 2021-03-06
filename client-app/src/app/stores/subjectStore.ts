@@ -3,7 +3,7 @@ import agent from "../api/agent";
 import { IDay, IGroup } from "../models/group";
 
 export default class  SubjectStore {
-  groups: IGroup[] = [];
+  groupsRegystry = new Map<string, IGroup>(); // TODO:
   loading: boolean = false;
   selectedGroup: IGroup | undefined = undefined;
   selectedDay: IDay | undefined = undefined;
@@ -17,33 +17,57 @@ export default class  SubjectStore {
     try {
       const groups = await agent.Groups.list();
 
-      groups.forEach(g => this.groups.push(g));
+      groups.forEach(g => this.groupsRegystry.set(g.id, g));
       this.setLoading(false);
     } catch(error) {
       console.log(error);
       this.setLoading(false);
     }
   }
-  
-  setLoading = (state: boolean): void => {
-    this.loading = state;
-  }
-  
-  selectGroup = (id: string): void => {
-    this.selectedGroup = this.groups.find(g => g.id === id);
-  }
 
-  cancelSelectGroup = (): void => {
-    this.selectedGroup = undefined;
+  loadGroup = async (id: string): Promise<void> => {
+    let group: IGroup | undefined = this.getGroup(id);
+
+    this.setLoading(true);
+    if (group) {
+      this.selectedGroup = group;
+      this.setLoading(false);
+    } else {
+      try {
+        group = await agent.Groups.details(id);
+        this.groupsRegystry.set(group.id, group)
+        this.setGroup(group);
+        this.setLoading(false);
+      } catch(error) {
+        console.log(error);
+        this.setLoading(false);
+      }
+    }
   }
   
   selectDay = (id: string): void => {
     runInAction(() => {
-      this.selectedDay = this.groups.flatMap(g => g.days).find(d => d.id == id);
+      this.selectedDay = this.getGroups.flatMap(g => g.days).find(d => d.id == id);
     });
   };
 
   cancelDay = (): void  => {
     this.selectedDay = undefined;
   };
+
+  get getGroups(): IGroup[] {
+    return Array.from(this.groupsRegystry.values());
+  }
+
+  private setGroup = (group: IGroup): void => {
+    this.selectedGroup = group;
+  }
+
+  private setLoading = (state: boolean): void => {
+    this.loading = state;
+  }
+
+  private getGroup = (id: string): IGroup | undefined => {
+    return this.groupsRegystry.get(id);
+  }
 }

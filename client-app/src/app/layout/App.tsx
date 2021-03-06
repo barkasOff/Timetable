@@ -1,22 +1,18 @@
 import { observer } from 'mobx-react-lite';
-import React, { useEffect } from 'react';
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
 import GroupDashboard from '../../features/group/dashboard/GroupDashboard';
-import { useStore } from '../stores/store';
-import Loading from './Loading/Loading';
+import GroupDetails from '../../features/group/details/GroupDetails';
+import HomePage from '../../features/home/HomePage';
 
 const App: React.FC = () => {
-  const { subjectStore } = useStore();
-
-  useEffect(() => {
-    subjectStore.loadGroups();
-  }, [subjectStore]);
-  
-  if (subjectStore.loading) {
-    return <Loading content='Загрузка...' />
-  }
   return (
     <>
-      <GroupDashboard />
+      <Switch>
+        <Route exact path='/' component={HomePage} />
+        <Route exact path='/groups' component={GroupDashboard} />
+        <Route path='/groups/:id' component={GroupDetails} />
+      </Switch>
     </>
   );
 };
