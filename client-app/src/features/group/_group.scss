@@ -1,16 +1,27 @@
 .group {
-  margin-top: 20px;
+  margin-top: 7rem;
+  width: 35rem;
+  height: 15rem;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgba(#000, .3);
+  box-shadow: 5px 7px 10px rgba(#000, .4);
+  border-radius: 5px;
+  padding: 15px;
   &__details {
-    margin-top: 20px;
+    margin-top: 5rem;
   }
   &__list {
     margin-left: 15px;
   }
   &__item {
-    font-size: 32px;
+    font-size: 26px;
     font-weight: 500;
+    text-decoration: none;
     color: #000;
     cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
   }
   &__header {
     display: flex;

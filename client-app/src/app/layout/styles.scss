@@ -2,7 +2,11 @@
 @import './styles/btns';
 
 html {
-  background-color: rgb(182, 214, 233);
+  background-color: rgb(221, 242, 255);
+  position: relative;
+}
+::selection {
+  color: rgb(246, 166, 166);
 }
 * {
   padding: 0;
@@ -18,4 +22,6 @@ html {
 }
 
 @import '../../features/group/group';
+@import '../../features/home/home';
 @import './Loading/loading';
+@import './Navigation/navigation';

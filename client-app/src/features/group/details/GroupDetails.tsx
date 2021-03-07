@@ -44,24 +44,22 @@ const GroupDetails: React.FC = () => {
   }
   return (
     <div className="group__details">
-      <div className="container">
-        <div className="group__header">
-          <h2 className="group__title">{group!.number}</h2>
-          <Link
-            className="btn btn-back-to-group"
-            to="/groups">
-            Назад</Link>
-        </div>
-        <div className="group__days">
-          {dayInit({group, day, selectDay}, 'Понедельник')}
-          {dayInit({group, day, selectDay}, 'Вторник')}
-          {dayInit({group, day, selectDay}, 'Среда')}
-          {dayInit({group, day, selectDay}, 'Четверг')}
-          {dayInit({group, day, selectDay}, 'Пятница')}
-          {dayInit({group, day, selectDay}, 'Суббота')}
-        </div>
-        <GroupContent />
+      <div className="group__header">
+        <h2 className="group__title">{group!.number}</h2>
+        <Link
+          className="btn btn-back-to-group"
+          to="/groups">
+          Назад</Link>
       </div>
+      <div className="group__days">
+        {dayInit({group, day, selectDay}, 'Понедельник')}
+        {dayInit({group, day, selectDay}, 'Вторник')}
+        {dayInit({group, day, selectDay}, 'Среда')}
+        {dayInit({group, day, selectDay}, 'Четверг')}
+        {dayInit({group, day, selectDay}, 'Пятница')}
+        {dayInit({group, day, selectDay}, 'Суббота')}
+      </div>
+      <GroupContent />
     </div>
   );
 };
