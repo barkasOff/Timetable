@@ -12,6 +12,7 @@ const GroupList: React.FC = () => {
         <Link
           key={group.id}
           className="group__item"
+          onMouseEnter={() => subjectStore.loadGroup(group.id)}
           to={`/groups/${group.id}`}>
           {group.number}
         </Link>

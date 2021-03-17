@@ -109,6 +109,198 @@ namespace Persistence
               }
             }
           }
+        },
+        new Group
+        {
+          Number = "4341",
+          Days = new List<Day>
+          {
+            new Day
+            {
+              Name = "Понедельник",
+              Week = true,
+              Subjects = new List<Subject>
+              {
+                new Subject
+                {
+                  Discipline = "Безопасность жизнедеятельности",
+                  Cabinet = 419,
+                  Building = 5,
+                  Type = "Практика"
+                }
+              }
+            },
+            new Day
+            {
+              Name = "Вторник",
+              Subjects = new List<Subject>
+              {
+                new Subject
+                {
+                  Discipline = "Безопасность жизнедеятельности",
+                  Cabinet = 410,
+                  Building = 7,
+                  Type = "Практика"
+                },
+              }
+            },
+            new Day
+            {
+              Name = "Среда",
+              Week = true,
+              Subjects = new List<Subject>
+              {
+                new Subject
+                {
+                  Discipline = "Безопасность жизнедеятельности",
+                  Cabinet = 410,
+                  Building = 7,
+                  Type = "Практика"
+                },
+              }
+            },
+            new Day
+            {
+              Name = "Четверг",
+              Week = false,
+              Subjects = new List<Subject>
+              {
+                new Subject
+                {
+                  Discipline = "Безопасность жизнедеятельности",
+                  Cabinet = 410,
+                  Building = 7,
+                  Type = "Практика"
+                },
+              }
+            },
+            new Day
+            {
+              Name = "Пятница",
+              Week = false,
+              Subjects = new List<Subject>
+              {
+                new Subject
+                {
+                  Discipline = "Технология разработки программного обеспечения",
+                  Cabinet = 422,
+                  Building = 5,
+                  Type = "Лекция"
+                },
+              }
+            },
+            new Day
+            {
+              Name = "Суббота",
+              Week = true,
+              Subjects = new List<Subject>
+              {
+                new Subject
+                {
+                  Discipline = "Технология разработки программного обеспечения",
+                  Cabinet = 422,
+                  Building = 5,
+                  Type = "Лекция"
+                },
+              }
+            }
+          }
+        },
+        new Group
+        {
+          Number = "4338",
+          Days = new List<Day>
+          {
+            new Day
+            {
+              Name = "Понедельник",
+              Week = true,
+              Subjects = new List<Subject>
+              {
+                new Subject
+                {
+                  Discipline = "Безопасность жизнедеятельности",
+                  Cabinet = 419,
+                  Building = 5,
+                  Type = "Практика"
+                }
+              }
+            },
+            new Day
+            {
+              Name = "Вторник",
+              Subjects = new List<Subject>
+              {
+                new Subject
+                {
+                  Discipline = "Безопасность жизнедеятельности",
+                  Cabinet = 410,
+                  Building = 7,
+                  Type = "Практика"
+                },
+              }
+            },
+            new Day
+            {
+              Name = "Среда",
+              Week = true,
+              Subjects = new List<Subject>
+              {
+                new Subject
+                {
+                  Discipline = "Безопасность жизнедеятельности",
+                  Cabinet = 410,
+                  Building = 7,
+                  Type = "Практика"
+                },
+              }
+            },
+            new Day
+            {
+              Name = "Четверг",
+              Week = false,
+              Subjects = new List<Subject>
+              {
+                new Subject
+                {
+                  Discipline = "Безопасность жизнедеятельности",
+                  Cabinet = 410,
+                  Building = 7,
+                  Type = "Практика"
+                },
+              }
+            },
+            new Day
+            {
+              Name = "Пятница",
+              Week = false,
+              Subjects = new List<Subject>
+              {
+                new Subject
+                {
+                  Discipline = "Технология разработки программного обеспечения",
+                  Cabinet = 422,
+                  Building = 5,
+                  Type = "Лекция"
+                },
+              }
+            },
+            new Day
+            {
+              Name = "Суббота",
+              Week = true,
+              Subjects = new List<Subject>
+              {
+                new Subject
+                {
+                  Discipline = "Технология разработки программного обеспечения",
+                  Cabinet = 422,
+                  Building = 5,
+                  Type = "Лекция"
+                },
+              }
+            }
+          }
         }
       };
 

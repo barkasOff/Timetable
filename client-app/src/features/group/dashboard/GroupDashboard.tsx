@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import Loading from '../../../app/layout/Loading/Loading';
 import { useStore } from '../../../app/stores/store';
 import GroupList from './GroupList';
+import GroupPreview from './GroupPreview';
 
 const GroupDashboard: React.FC = () => {
   const { subjectStore } = useStore(),
@@ -19,7 +20,10 @@ const GroupDashboard: React.FC = () => {
   }
   return (
     <section className='group'>
-      <GroupList />
+      <div className="group__control">
+        <GroupList />
+        <GroupPreview />
+      </div>
     </section>
   );
 }

@@ -6,7 +6,6 @@ export default class  SubjectStore {
   groupsRegystry = new Map<string, IGroup>(); // TODO:
   loading: boolean = false;
   selectedGroup: IGroup | undefined = undefined;
-  selectedDay: IDay | undefined = undefined;
 
   constructor() {
     makeAutoObservable(this);
@@ -44,16 +43,6 @@ export default class  SubjectStore {
       }
     }
   }
-  
-  selectDay = (id: string): void => {
-    runInAction(() => {
-      this.selectedDay = this.getGroups.flatMap(g => g.days).find(d => d.id == id);
-    });
-  };
-
-  cancelDay = (): void  => {
-    this.selectedDay = undefined;
-  };
 
   get getGroups(): IGroup[] {
     return Array.from(this.groupsRegystry.values());

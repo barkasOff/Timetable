@@ -14,10 +14,9 @@ html {
   box-sizing: border-box;
   font-weight: 300;
   font-family: 'Roboto', sans-serif;
-  position: relative;
 }
 .container {
-  width: 1440px;
+  max-width: 1440px;
   margin: 0 auto;
 }
 
@@ -25,3 +24,29 @@ html {
 @import '../../features/home/home';
 @import './Loading/loading';
 @import './Navigation/navigation';
+
+@media (max-width: 1500px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+@media (max-width: 1199px) {
+  .container {
+    max-width: 900px;
+  }
+}
+@media (max-width: 991px) {
+  .container {
+    max-width: 700px;
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    max-width: 500px;
+  }
+}
+@media (max-width: 575px) {
+  .container {
+    max-width: 300px
+  }
+}

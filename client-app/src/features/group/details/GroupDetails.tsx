@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Loading from '../../../app/layout/Loading/Loading';
 import { IDay, IGroup } from '../../../app/models/group';
@@ -9,7 +9,7 @@ import GroupContent from './GroupContent';
 interface IProps {
   group: IGroup | undefined;
   day: IDay | undefined;
-  selectDay: (id: string) => void;
+  selectDay: (day: IDay | undefined) => void;
 }
 
 const dayInit = ({group, day, selectDay}: IProps, dayName: string) => {
@@ -20,15 +20,16 @@ const dayInit = ({group, day, selectDay}: IProps, dayName: string) => {
   }
   return (
     <div
-    className={classes.join(' ')}
-    onClick={() => selectDay(group!.days.find(d => d.name == dayName)?.id ?? '')}>
-    {dayName}</div>
+      className={classes.join(' ')}
+      onClick={() => selectDay(group!.days.find(d => d.name == dayName))}>
+      {dayName}</div>
   );
 }
 const GroupDetails: React.FC = () => {
   const { subjectStore } = useStore(),
-        { selectDay, selectedDay: day, selectedGroup: group, loading, loadGroup } = subjectStore,
-        { id } = useParams<{id: string}>();
+        { selectedGroup: group, loading, loadGroup } = subjectStore,
+        { id } = useParams<{id: string}>(),
+        [selectedDay, selectDay] = useState<IDay | undefined>(undefined);
 
   useEffect(() => {
     if (id) {
@@ -39,8 +40,8 @@ const GroupDetails: React.FC = () => {
   if (loading || !group) {
     return <Loading />;
   }
-  if (!day) {
-    selectDay(group!.days.find(d => d.name == 'Понедельник')?.id ?? '');
+  if (!selectedDay) {
+    selectDay(group!.days.find(d => d.name == 'Понедельник'));
   }
   return (
     <div className="group__details">
@@ -52,14 +53,14 @@ const GroupDetails: React.FC = () => {
           Назад</Link>
       </div>
       <div className="group__days">
-        {dayInit({group, day, selectDay}, 'Понедельник')}
-        {dayInit({group, day, selectDay}, 'Вторник')}
-        {dayInit({group, day, selectDay}, 'Среда')}
-        {dayInit({group, day, selectDay}, 'Четверг')}
-        {dayInit({group, day, selectDay}, 'Пятница')}
-        {dayInit({group, day, selectDay}, 'Суббота')}
+        {dayInit({group, day: selectedDay, selectDay}, 'Понедельник')}
+        {dayInit({group, day: selectedDay, selectDay}, 'Вторник')}
+        {dayInit({group, day: selectedDay, selectDay}, 'Среда')}
+        {dayInit({group, day: selectedDay, selectDay}, 'Четверг')}
+        {dayInit({group, day: selectedDay, selectDay}, 'Пятница')}
+        {dayInit({group, day: selectedDay, selectDay}, 'Суббота')}
       </div>
-      <GroupContent />
+      <GroupContent selectedDay={selectedDay!} />
     </div>
   );
 };

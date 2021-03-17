@@ -6,15 +6,15 @@ const Navigation: React.FC = () => {
     <nav className="navigation">
       <div className="container">
         <div className="navigation__wrapper">
-          <div className="navigation__item">
+          <Link to="/" className="navigation__item">
             <div className="navigation__logo">
               <img className="navigation__icon" src="assets/timetableLogo.svg" alt="navLogo"/>
-              <Link to="/" className="navigation__title">Расписание</Link>
+              <div className="navigation__title">Расписание</div>
             </div>
-          </div>
-          <div className="navigation__item">
-            <Link to="/groups" className="navigation__text">Группы</Link>
-          </div>
+          </Link>
+          <Link to="/groups" className="navigation__item">
+            <div className="navigation__text">Группы</div>
+          </Link>
         </div>
       </div>
     </nav>
