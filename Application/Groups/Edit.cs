@@ -7,7 +7,7 @@ using FluentValidation;
 using MediatR;
 using Persistence;
 
-namespace Application.Subjects
+namespace Application.Groups
 {
   public class Edit
   {

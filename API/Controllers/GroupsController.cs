@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using Application.Subjects;
+using Application.Groups;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
 

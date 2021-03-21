@@ -1,7 +1,7 @@
 using Domain;
 using FluentValidation;
 
-namespace Application.Subjects
+namespace Application.Groups
 {
   public class GroupValidator : AbstractValidator<Group>
   {

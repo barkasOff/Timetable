@@ -7,11 +7,11 @@ interface IProps {
 
 const getSubject = (subject: ISubject) => {
   return (
-    <tr key={subject.id} className="group__subjects">
-      <td className="group__subject">{subject.discipline}</td>
-      <td className="group__subject">{subject.cabinet}</td>
-      <td className="group__subject">{subject.building}</td>
-      <td className="group__subject">{subject.type}</td>
+    <tr key={subject.id} className="group__timetable">
+      <td className="group__point">{subject.discipline}</td>
+      <td className="group__point">{subject.cabinet}</td>
+      <td className="group__point">{subject.building}</td>
+      <td className="group__point">{subject.type}</td>
     </tr>
   );
 };

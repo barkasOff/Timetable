@@ -19,6 +19,9 @@ html {
   max-width: 1440px;
   margin: 0 auto;
 }
+.container-full {
+  height: 100vh;
+}
 
 @import '../../features/group/group';
 @import '../../features/home/home';

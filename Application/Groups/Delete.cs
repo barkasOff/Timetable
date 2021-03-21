@@ -2,26 +2,26 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Core;
-using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
-namespace Application.Subjects
+namespace Application.Groups
 {
-  public class Details
+  public class Delete
   {
-    public class Query : IRequest<Result<Group>>
+    public class Command : IRequest<Result<Unit>>
     {
       public Guid Id { get; set; }
     }
-    public class Handler : IRequestHandler<Query, Result<Group>>
+    public class Handler : IRequestHandler<Command, Result<Unit>>
     {
       private readonly DataContext _context;
 
       public Handler(DataContext context) =>
         _context = context;
-      public async Task<Result<Group>> Handle(Query request, CancellationToken cancellationToken)
+
+      public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
       {
         var groups = await _context.Groups
           .Include(x => x.Days)
@@ -29,7 +29,15 @@ namespace Application.Subjects
           .ToListAsync();
         var group = await Task.Run(() => groups.Find(x => x.Id == request.Id));
 
-        return (Result<Group>.Success(group));
+        if (group == null)
+          return (null);
+        _context.Groups.Remove(group);
+
+        var result = await _context.SaveChangesAsync() > 0;
+
+        if (!result)
+          return (Result<Unit>.Failure("Ошибка в удалении занятия"));
+        return (Result<Unit>.Success(Unit.Value));
       }
     }
   }

@@ -1,5 +1,5 @@
 using Application.Core;
-using Application.Subjects;
+using Application.Groups;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

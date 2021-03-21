@@ -1,6 +1,6 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable } from "mobx";
 import agent from "../api/agent";
-import { IDay, IGroup } from "../models/group";
+import { IDay, IGroup, ISubject } from "../models/group";
 
 export default class  SubjectStore {
   groupsRegystry = new Map<string, IGroup>(); // TODO:
@@ -42,6 +42,20 @@ export default class  SubjectStore {
         this.setLoading(false);
       }
     }
+  }
+  
+  getSubjects = (idGroup: string): ISubject[] => {
+    const group: IGroup | undefined = this.getGroup(idGroup),
+          days: IDay[] = group!.days;
+    let   subjects: ISubject[] = [];
+
+    days.forEach(day => {
+      day.subjects.forEach(subject => {
+        if (!subjects.find(s => s.discipline === subject.discipline))
+          subjects.push(subject)
+      });
+    });
+    return (subjects);
   }
 
   get getGroups(): IGroup[] {

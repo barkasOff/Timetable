@@ -15,7 +15,7 @@ const App: React.FC = () => {
         render={() => (
           <>
             <Navigation />
-            <div className="container">
+            <div className="container container-full">
               <Switch>
                 <Route exact path='/groups' component={GroupDashboard} />
                 <Route path='/groups/:id' component={GroupDetails} />
