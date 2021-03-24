@@ -16,7 +16,7 @@ const GroupDashboard: React.FC = () => {
   }, [groupsRegystry.size, loadGroups]);
   
   if (subjectStore.loading) {
-    return <Loading />
+    return <Loading content='Загрузка списка групп...' />
   }
   return (
     <section className='group'>

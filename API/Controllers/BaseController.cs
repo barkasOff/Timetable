@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace API.Controllers
 {
   [ApiController]
-  [Route("timetable/[controller]")]
+  [Route("api/[controller]")]
   public class BaseController : ControllerBase
   {
     private IMediator _mediator;
