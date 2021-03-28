@@ -9,6 +9,6 @@ namespace Application.DTOs
     public Guid Id { get; set; }
     public string Number { get; set; }
     public ICollection<DayDTO> Days { get; set; }
-    public ICollection<Profile> Students { get; set; }
+    public ICollection<GroupStudentDTO> Students { get; set; }
   }
 }

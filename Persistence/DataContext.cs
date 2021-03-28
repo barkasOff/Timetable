@@ -8,6 +8,7 @@ namespace Persistence
   {
     public DbSet<Group> Groups { get; set; }
     public DbSet<GroupStudent> GroupStudents { get; set; }
+    public DbSet<Photo> Photos { get; set; }
 
     public DataContext(DbContextOptions options) : base(options) { }
 
