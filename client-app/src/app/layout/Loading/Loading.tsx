@@ -1,17 +1,26 @@
 import React from 'react';
 
 interface Props {
-  content?: string
+  content?: string | null,
+  classes?: string | null
 }
 
-const Loading: React.FC<Props> = ({content = 'Загрузка...'}: Props) => {
+const Loading: React.FC<Props> = ({content = 'Загрузка...', classes = null}: Props) => {
+  const classParams: string[] = ["loading__spinner"];
+
+  if (classes) {
+    classParams.push(classes);
+  }
   return (
     <div className="loading">
       <div className="loading__wrapper">
-        <div className="loading__spinner">
+        <div className={classParams.join(' ')}>
           <img src="\assets\spinner.svg" alt="loading" />
         </div>
-        <div className="loading__content">{content}</div>
+        {content ?
+        <div className="loading__content">{content}</div> :
+        <></>}
+        
       </div>
     </div>
   );

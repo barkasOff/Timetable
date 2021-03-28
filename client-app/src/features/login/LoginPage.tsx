@@ -30,7 +30,7 @@ const LoginPage: React.FC = () => {
   return (
     <section className="login">
       <div className="login__wrapper">
-        <img src="assets/KAI-logo.png" alt="KAI-logo" className="login__logo" />
+        <img src="assets/KAI-logo.svg" alt="KAI-logo" className="login__logo" />
         <div className="login__header">
           <div className="login__title">Авториция</div>
           <div className="login__subtitle">Добро пожаловать на сайт КАИ!!</div>
@@ -56,7 +56,7 @@ const LoginPage: React.FC = () => {
             <button
               className="btn btn-suc"
               onClick={e => loginHandler(e)}>
-              {userStore.loading ? <Loading /> : "Войти"}</button>
+              {userStore.loading ? <Loading content={null} classes='loading__btn-loaded' /> : "Войти"}</button>
             <button
               className="btn btn-fai login__btn-fai"
               onClick={e => cancelHandler(e)}>

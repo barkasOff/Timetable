@@ -1,8 +1,8 @@
 using System;
 
-namespace Domain
+namespace Application.DTOs
 {
-  public class Subject
+  public class SubjectDTO
   {
     public Guid Id { get; set; }
     public string Discipline { get; set; }

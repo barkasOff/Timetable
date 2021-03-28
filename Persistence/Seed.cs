@@ -10,18 +10,23 @@ namespace Persistence
   {
     public static async Task SeedDataAsync(DataContext context, UserManager<User> userManager)
     {
+      var students = new List<User>();
+
       if (!userManager.Users.Any())
       {
-        var users = new List<User>
-        {
-          new User { DisplayName = "Boris", UserName = "boris", Email = "boris@test.com", Position = "student" },
-          new User { DisplayName = "Adel", UserName = "adel", Email = "adel@test.com", Position = "student" },
-          new User { DisplayName = "Vova", UserName = "vova", Email = "vova@test.com", Position = "student" }
-        };
+        students.AddRange(
+          new List<User>
+          {
+            new User { DisplayName = "Boris", UserName = "boris", Email = "boris@test.com" },
+            new User { DisplayName = "Adel", UserName = "adel", Email = "adel@test.com" },
+            new User { DisplayName = "Vova", UserName = "vova", Email = "vova@test.com" }
+          }
+        );
 
-        foreach (var user in users)
+        foreach (var user in students)
           await userManager.CreateAsync(user, "Pa$$w0rd");
       }
+      
       if (context.Groups.Any())
         return;
 
@@ -29,6 +34,12 @@ namespace Persistence
       {
         new Group
         {
+          Students = new List<GroupStudent>
+          {
+            new GroupStudent { Student = students[0] },
+            new GroupStudent { Student = students[1] },
+            new GroupStudent { Student = students[2] },
+          },
           Number = "4343",
           Days = new List<Day>
           {
