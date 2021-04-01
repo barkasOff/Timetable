@@ -5,6 +5,7 @@ import GroupDashboard from '../../features/group/dashboard/GroupDashboard';
 import GroupDetails from '../../features/group/details/GroupDetails';
 import HomePage from '../../features/home/HomePage';
 import LoginPage from '../../features/login/LoginPage';
+import ProfilePage from '../../features/profile/ProfilePage';
 import { useStore } from '../stores/store';
 import Loading from './Loading/Loading';
 import Navigation from './Navigation/Navigation';
@@ -38,6 +39,7 @@ const App: React.FC = () => {
                 <Route exact path='/groups' component={GroupDashboard} />
                 <Route path='/groups/:id' component={GroupDetails} />
                 <Route path='/login' component={LoginPage} />
+                <Route path='/profile' component={ProfilePage} />
               </Switch>
             </div>
           </>

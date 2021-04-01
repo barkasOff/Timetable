@@ -58,10 +58,12 @@ namespace API.Controllers
 
     private UserDTO ConvertEntityToUser(User user)
     {
+      if (user == null)
+        return (null);
       return (new UserDTO
       {
         DisplayName = user.DisplayName,
-        Image = user?.Photos?.FirstOrDefault(p => p.IsMain).Url,
+        Image = user?.Photos?.FirstOrDefault(p => p.IsMain)?.Url,
         Token = _tokenService.CreateToken(user),
         Username = user.UserName
       });

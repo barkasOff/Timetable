@@ -15,7 +15,7 @@ interface IProps {
 const dayInit = ({group, day, selectDay}: IProps, dayName: string) => {
   const classes = ['group__day'];
 
-  if (day?.name == dayName) {
+  if (day?.name === dayName) {
     classes.push('group__day-active');
   }
   return (

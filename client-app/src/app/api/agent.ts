@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { IGroup } from '../models/group';
+import { PaginatedResult } from '../models/pagination';
 import { IUser, IUserForm } from '../models/user';
 import { store } from '../stores/store';
 
@@ -22,6 +23,12 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(async response => {
   try {
     await sleep(1000);
+    const pagination = response.headers['pagination'];
+
+    if (pagination) {
+      response.data = new PaginatedResult(response.data, JSON.parse(pagination));
+      return response as AxiosResponse<PaginatedResult<any>>;
+    }
     return response;
   } catch (error) {
     console.log(error);
@@ -39,7 +46,7 @@ const requests = {
 }
 
 const Groups = {
-  list: () => requests.get<IGroup[]>('/groups'),
+  list: (params: URLSearchParams) => axios.get<PaginatedResult<IGroup[]>>('/groups', {params}).then(responseBody),
   details: (id: string) => requests.get<IGroup>(`/groups/${id}`),
   create: (group: IGroup) => requests.post<void>('/groups', group),
   edit: (group: IGroup) => requests.put<void>('/groups', group),

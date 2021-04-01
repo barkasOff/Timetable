@@ -30,6 +30,16 @@ const Navigation: React.FC = () => {
             </div>
             {showMenu ?
             <div className="navigation__user-abilities">
+              <Link
+                className="navigation__user-ability"
+                to={'/profile'}
+                onClick={() => setShowMenu(!showMenu)}>
+                <img
+                  src="assets/profile.svg"
+                  alt="profile"
+                  className="navigation__user-ability-logo" />
+                <div className="navigation__user-ability-text">Профиль</div>
+              </Link>
               <div
                 className="navigation__user-ability"
                 onClick={() => {
@@ -40,7 +50,7 @@ const Navigation: React.FC = () => {
                   src="assets/logout.svg"
                   alt="logout"
                   className="navigation__user-ability-logo" />
-                <div className="navigation__user-ability-text">Logout</div>
+                <div className="navigation__user-ability-text">Выйти</div>
               </div>
             </div> :
             <></>}

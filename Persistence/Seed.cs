@@ -30,303 +30,115 @@ namespace Persistence
       if (context.Groups.Any())
         return;
 
-      var groups = new List<Group>
+      var groups = new List<Group>();
+
+      for (int i = 4301; i <= 4344; ++i)
       {
-        new Group
-        {
-          Students = new List<GroupStudent>
+        groups.Add(
+          new Group
           {
-            new GroupStudent { Student = students[0] },
-            new GroupStudent { Student = students[1] },
-            new GroupStudent { Student = students[2] },
-          },
-          Number = "4343",
-          Days = new List<Day>
-          {
-            new Day
+            Students = i == 4343 ? new List<GroupStudent>
             {
-              Name = "Понедельник",
-              Week = true,
-              Subjects = new List<Subject>
+              new GroupStudent { Student = students[0] },
+              new GroupStudent { Student = students[1] },
+              new GroupStudent { Student = students[2] },
+            } : new List<GroupStudent>(),
+            Number = $"{i}",
+            Days = new List<Day>
+            {
+              new Day
               {
-                new Subject
+                Name = "Понедельник",
+                Week = true,
+                Subjects = new List<Subject>
                 {
-                  Discipline = "Безопасность жизнедеятельности",
-                  Cabinet = 419,
-                  Building = 5,
-                  Type = "Практика"
+                  new Subject
+                  {
+                    Discipline = "Безопасность жизнедеятельности",
+                    Cabinet = 419,
+                    Building = 5,
+                    Type = "Практика"
+                  }
                 }
-              }
-            },
-            new Day
-            {
-              Name = "Вторник",
-              Subjects = new List<Subject>
+              },
+              new Day
               {
-                new Subject
+                Name = "Вторник",
+                Subjects = new List<Subject>
                 {
-                  Discipline = "Безопасность жизнедеятельности",
-                  Cabinet = 410,
-                  Building = 7,
-                  Type = "Практика"
-                },
-              }
-            },
-            new Day
-            {
-              Name = "Среда",
-              Week = true,
-              Subjects = new List<Subject>
+                  new Subject
+                  {
+                    Discipline = "Безопасность жизнедеятельности",
+                    Cabinet = 410,
+                    Building = 7,
+                    Type = "Практика"
+                  },
+                }
+              },
+              new Day
               {
-                new Subject
+                Name = "Среда",
+                Week = true,
+                Subjects = new List<Subject>
                 {
-                  Discipline = "Безопасность жизнедеятельности",
-                  Cabinet = 410,
-                  Building = 7,
-                  Type = "Практика"
-                },
-              }
-            },
-            new Day
-            {
-              Name = "Четверг",
-              Week = false,
-              Subjects = new List<Subject>
+                  new Subject
+                  {
+                    Discipline = "Безопасность жизнедеятельности",
+                    Cabinet = 410,
+                    Building = 7,
+                    Type = "Практика"
+                  },
+                }
+              },
+              new Day
               {
-                new Subject
+                Name = "Четверг",
+                Week = false,
+                Subjects = new List<Subject>
                 {
-                  Discipline = "Безопасность жизнедеятельности",
-                  Cabinet = 410,
-                  Building = 7,
-                  Type = "Практика"
-                },
-              }
-            },
-            new Day
-            {
-              Name = "Пятница",
-              Week = false,
-              Subjects = new List<Subject>
+                  new Subject
+                  {
+                    Discipline = "Безопасность жизнедеятельности",
+                    Cabinet = 410,
+                    Building = 7,
+                    Type = "Практика"
+                  },
+                }
+              },
+              new Day
               {
-                new Subject
+                Name = "Пятница",
+                Week = false,
+                Subjects = new List<Subject>
                 {
-                  Discipline = "Технология разработки программного обеспечения",
-                  Cabinet = 422,
-                  Building = 5,
-                  Type = "Лекция"
-                },
-              }
-            },
-            new Day
-            {
-              Name = "Суббота",
-              Week = true,
-              Subjects = new List<Subject>
+                  new Subject
+                  {
+                    Discipline = "Технология разработки программного обеспечения",
+                    Cabinet = 422,
+                    Building = 5,
+                    Type = "Лекция"
+                  },
+                }
+              },
+              new Day
               {
-                new Subject
+                Name = "Суббота",
+                Week = true,
+                Subjects = new List<Subject>
                 {
-                  Discipline = "Технология разработки программного обеспечения",
-                  Cabinet = 422,
-                  Building = 5,
-                  Type = "Лекция"
-                },
+                  new Subject
+                  {
+                    Discipline = "Технология разработки программного обеспечения",
+                    Cabinet = 422,
+                    Building = 5,
+                    Type = "Лекция"
+                  },
+                }
               }
             }
           }
-        },
-        new Group
-        {
-          Number = "4341",
-          Days = new List<Day>
-          {
-            new Day
-            {
-              Name = "Понедельник",
-              Week = true,
-              Subjects = new List<Subject>
-              {
-                new Subject
-                {
-                  Discipline = "Безопасность жизнедеятельности",
-                  Cabinet = 419,
-                  Building = 5,
-                  Type = "Практика"
-                }
-              }
-            },
-            new Day
-            {
-              Name = "Вторник",
-              Subjects = new List<Subject>
-              {
-                new Subject
-                {
-                  Discipline = "Безопасность жизнедеятельности",
-                  Cabinet = 410,
-                  Building = 7,
-                  Type = "Практика"
-                },
-              }
-            },
-            new Day
-            {
-              Name = "Среда",
-              Week = true,
-              Subjects = new List<Subject>
-              {
-                new Subject
-                {
-                  Discipline = "Безопасность жизнедеятельности",
-                  Cabinet = 410,
-                  Building = 7,
-                  Type = "Практика"
-                },
-              }
-            },
-            new Day
-            {
-              Name = "Четверг",
-              Week = false,
-              Subjects = new List<Subject>
-              {
-                new Subject
-                {
-                  Discipline = "Безопасность жизнедеятельности",
-                  Cabinet = 410,
-                  Building = 7,
-                  Type = "Практика"
-                },
-              }
-            },
-            new Day
-            {
-              Name = "Пятница",
-              Week = false,
-              Subjects = new List<Subject>
-              {
-                new Subject
-                {
-                  Discipline = "Технология разработки программного обеспечения",
-                  Cabinet = 422,
-                  Building = 5,
-                  Type = "Лекция"
-                },
-              }
-            },
-            new Day
-            {
-              Name = "Суббота",
-              Week = true,
-              Subjects = new List<Subject>
-              {
-                new Subject
-                {
-                  Discipline = "Технология разработки программного обеспечения",
-                  Cabinet = 422,
-                  Building = 5,
-                  Type = "Лекция"
-                },
-              }
-            }
-          }
-        },
-        new Group
-        {
-          Number = "4338",
-          Days = new List<Day>
-          {
-            new Day
-            {
-              Name = "Понедельник",
-              Week = true,
-              Subjects = new List<Subject>
-              {
-                new Subject
-                {
-                  Discipline = "Безопасность жизнедеятельности",
-                  Cabinet = 419,
-                  Building = 5,
-                  Type = "Практика"
-                }
-              }
-            },
-            new Day
-            {
-              Name = "Вторник",
-              Subjects = new List<Subject>
-              {
-                new Subject
-                {
-                  Discipline = "Безопасность жизнедеятельности",
-                  Cabinet = 410,
-                  Building = 7,
-                  Type = "Практика"
-                },
-              }
-            },
-            new Day
-            {
-              Name = "Среда",
-              Week = true,
-              Subjects = new List<Subject>
-              {
-                new Subject
-                {
-                  Discipline = "Безопасность жизнедеятельности",
-                  Cabinet = 410,
-                  Building = 7,
-                  Type = "Практика"
-                },
-              }
-            },
-            new Day
-            {
-              Name = "Четверг",
-              Week = false,
-              Subjects = new List<Subject>
-              {
-                new Subject
-                {
-                  Discipline = "Безопасность жизнедеятельности",
-                  Cabinet = 410,
-                  Building = 7,
-                  Type = "Практика"
-                },
-              }
-            },
-            new Day
-            {
-              Name = "Пятница",
-              Week = false,
-              Subjects = new List<Subject>
-              {
-                new Subject
-                {
-                  Discipline = "Технология разработки программного обеспечения",
-                  Cabinet = 422,
-                  Building = 5,
-                  Type = "Лекция"
-                },
-              }
-            },
-            new Day
-            {
-              Name = "Суббота",
-              Week = true,
-              Subjects = new List<Subject>
-              {
-                new Subject
-                {
-                  Discipline = "Технология разработки программного обеспечения",
-                  Cabinet = 422,
-                  Building = 5,
-                  Type = "Лекция"
-                },
-              }
-            }
-          }
-        }
-      };
+        );
+      }
 
       await context.Groups.AddRangeAsync(groups);
       await context.SaveChangesAsync();

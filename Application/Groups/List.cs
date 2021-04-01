@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Core;
@@ -13,8 +13,11 @@ namespace Application.Groups
 {
   public class List
   {
-    public class Query : IRequest<Result<List<GroupDTO>>> { }
-    public class Handler : IRequestHandler<Query, Result<List<GroupDTO>>>
+    public class Query : IRequest<Result<PagedList<GroupDTO>>>
+    {
+      public PagingParams PagingParams { get; set; }
+    }
+    public class Handler : IRequestHandler<Query, Result<PagedList<GroupDTO>>>
     {
       private readonly DataContext _context;
       private readonly IMapper _mapper;
@@ -25,10 +28,11 @@ namespace Application.Groups
         _context = context;
       }
 
-      public async Task<Result<List<GroupDTO>>> Handle(Query request, CancellationToken cancellationToken) =>
-        Result<List<GroupDTO>>.Success(await _context.Groups
+      public async Task<Result<PagedList<GroupDTO>>> Handle(Query request, CancellationToken cancellationToken) =>
+        Result<PagedList<GroupDTO>>.Success(await PagedList<GroupDTO>.CreateAsync(_context.Groups
           .ProjectTo<GroupDTO>(_mapper.ConfigurationProvider)
-          .ToListAsync());
+          .OrderBy(g => g.Number)
+          .AsQueryable(), request.PagingParams.PageNumber, request.PagingParams.PageSize));
     }
   }
 }

@@ -1,45 +1,72 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import { IDay, IGroup, ISubject } from "../models/group";
+import { IPagination, PagingParams } from "../models/pagination";
 
 export default class  SubjectStore {
-  groupsRegystry = new Map<string, IGroup>(); // TODO:
+  selectedGroupsRegystry = new Map<string, IGroup>();
+  allGroupsRegystry = new Map<string, IGroup>();
   loading: boolean = false;
+  loadingInitial: boolean = false;
   selectedGroup: IGroup | undefined = undefined;
+  pagination: IPagination | null = null;
+  pagingParams = new PagingParams();
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  loadGroups = async (): Promise<void> => {
-    this.setLoading(true);
-    try {
-      const groups = await agent.Groups.list();
+  setLoading = (value: boolean) => {
+    this.loading = value;
+  }
 
-      groups.forEach(g => this.groupsRegystry.set(g.id, g));
-      this.setLoading(false);
+  setPagingParams = (pagingParams: PagingParams) => {
+    this.pagingParams = pagingParams;
+  }
+
+  loadGroups = async (): Promise<void> => {
+    this.setLoadingInitial(true);
+    try {
+      const result = await agent.Groups.list(this.axiosParams);
+
+      result.data.forEach(g => {
+        runInAction(() => {
+          this.selectedGroupsRegystry.set(g.id, g);
+          this.allGroupsRegystry.set(g.id, g);
+        });
+      });
+      this.setPagination(result.pagination);
+      this.setLoadingInitial(false);
     } catch(error) {
       console.log(error);
-      this.setLoading(false);
+      this.setLoadingInitial(false);
     }
+  }
+
+  clearGroups = () => {
+    this.selectedGroupsRegystry.clear();
+  }
+
+  setPagination = (pagination: IPagination): void => {
+    this.pagination = pagination;
   }
 
   loadGroup = async (id: string): Promise<void> => {
     let group: IGroup | undefined = this.getGroup(id);
 
-    this.setLoading(true);
+    this.setLoadingInitial(true);
     if (group) {
-      this.selectedGroup = group;
-      this.setLoading(false);
+      runInAction(() => this.selectedGroup = group);
+      this.setLoadingInitial(false);
     } else {
       try {
         group = await agent.Groups.details(id);
-        this.groupsRegystry.set(group.id, group)
+        this.allGroupsRegystry.set(group.id, group)
         this.setGroup(group);
-        this.setLoading(false);
+        this.setLoadingInitial(false);
       } catch(error) {
         console.log(error);
-        this.setLoading(false);
+        this.setLoadingInitial(false);
       }
     }
   }
@@ -49,28 +76,38 @@ export default class  SubjectStore {
           days: IDay[] = group!.days;
     let   subjects: ISubject[] = [];
 
-    days.forEach(day => {
-      day.subjects.forEach(subject => {
-        if (!subjects.find(s => s.discipline === subject.discipline))
-          subjects.push(subject)
+    if (group) {
+      days.forEach(day => {
+        day.subjects.forEach(subject => {
+          if (!subjects.find(s => s.discipline === subject.discipline))
+            subjects.push(subject)
+        });
       });
-    });
+    }
     return (subjects);
   }
 
+  get axiosParams() {
+    const params = new URLSearchParams();
+
+    params.append('pageNumber', this.pagingParams.pageNumber.toString());
+    params.append('pageSize', this.pagingParams.pageSize.toString());
+    return (params);
+  }
+
   get getGroups(): IGroup[] {
-    return Array.from(this.groupsRegystry.values());
+    return Array.from(this.selectedGroupsRegystry.values());
   }
 
   private setGroup = (group: IGroup): void => {
     this.selectedGroup = group;
   }
 
-  private setLoading = (state: boolean): void => {
-    this.loading = state;
+  private setLoadingInitial = (state: boolean): void => {
+    this.loadingInitial = state;
   }
 
   private getGroup = (id: string): IGroup | undefined => {
-    return this.groupsRegystry.get(id);
+    return this.allGroupsRegystry.get(id);
   }
 }

@@ -1,11 +1,16 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Loading from '../../../app/layout/Loading/Loading';
 import { useStore } from '../../../app/stores/store';
 
 const GroupList: React.FC = () => {
-  const { subjectStore } = useStore();
+  const { subjectStore } = useStore(),
+        { loading } = subjectStore;
         
+  if (loading) {
+    return <Loading content='Загрузка групп...' />
+  }
   return (
     <div className="group__list">
       {subjectStore.getGroups.map(group => (

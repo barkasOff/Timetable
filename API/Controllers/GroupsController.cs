@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Application.Core;
 using Application.Groups;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
@@ -9,8 +10,8 @@ namespace API.Controllers
   public class GroupsController : BaseController
   {
     [HttpGet]
-    public async Task<IActionResult> GetGroups() =>
-      HandleResult(await Mediator.Send(new List.Query()));
+    public async Task<IActionResult> GetGroups([FromQuery]PagingParams pagingParams) =>
+      HandlePagedResult(await Mediator.Send(new List.Query { PagingParams = pagingParams }));
     [HttpGet("{id}")]
     public async Task<IActionResult> GetGroup(Guid id) =>
       HandleResult(await Mediator.Send((new Details.Query { Id = id })));

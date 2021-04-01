@@ -36,4 +36,31 @@
       background-color: rgb(175, 26, 26);
     }
   }
+  &-num {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline: none;
+    min-width: 50px;
+    height: 50px;
+    color: rgb(0, 20, 105);
+    font-size: 20px;
+    border: none;
+    background-color: rgb(255, 255, 255);
+    z-index: 1;
+    img {
+      width: 70%;
+      height: 70%;
+    }
+    &:hover {
+      background-color: rgb(240, 240, 240);
+    }
+    &:active {
+      background-color: rgb(233, 233, 233);
+    }
+    &-active {
+      background-color: rgb(240, 240, 240);
+    }
+  }
 }
