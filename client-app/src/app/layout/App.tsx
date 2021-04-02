@@ -1,6 +1,10 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import NotFound from '../../features/errors/NotFound';
+import ServerError from '../../features/errors/ServerError';
+import TestErrors from '../../features/errors/TestErrors';
 import GroupDashboard from '../../features/group/dashboard/GroupDashboard';
 import GroupDetails from '../../features/group/details/GroupDetails';
 import HomePage from '../../features/home/HomePage';
@@ -28,6 +32,7 @@ const App: React.FC = () => {
   }
   return (
     <>
+      <ToastContainer position='bottom-right' hideProgressBar />
       <Route exact path='/' component={HomePage} />
       <Route
         path={'/(.+)'}
@@ -40,6 +45,9 @@ const App: React.FC = () => {
                 <Route path='/groups/:id' component={GroupDetails} />
                 <Route path='/login' component={LoginPage} />
                 <Route path='/profile' component={ProfilePage} />
+                <Route path='/errors' component={TestErrors} />
+                <Route path='/server-error' component={ServerError} />
+                <Route path='/not-found' component={NotFound} />
               </Switch>
             </div>
           </>

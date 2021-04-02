@@ -1,35 +1,37 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useRef, useState } from 'react';
-import Loading from '../../../app/layout/Loading/Loading';
 import { PagingParams } from '../../../app/models/pagination';
 import { useStore } from '../../../app/stores/store';
 
 const GroupNumeration: React.FC = () => {
   const { subjectStore } = useStore(),
-        { setLoading, setPagingParams, pagination, clearGroups, loadGroups, loading, selectedGroupsRegystry } = subjectStore;
-  const numbers = Array.from(Array(pagination ? pagination!.totalPages : 0).keys());
-  const [offset, setOffset] = useState(0);
-  const [actualScroll, setActualScroll] = useState(-1);
-  const [pageShift, setPageShift] = useState(-1);
-  const [actualPage, setActualPage] = useState(1);
-  const targetRef = useRef<HTMLDivElement>(null);
+        { setLoading, setPagingParams, pagination,
+          clearGroups, loadGroups, loading, selectedGroupsRegystry } = subjectStore,
+        numbers = Array.from(Array(pagination ? pagination!.totalPages : 0).keys()),
+        [offset, setOffset] = useState(0),
+        [actualScroll, setActualScroll] = useState(0),
+        [pageShift, setPageShift] = useState(0),
+        [actualPage, setActualPage] = useState(1),
+        targetRef = useRef<HTMLDivElement>(null);
 
   function scrollScrollBar(newOffset: number, turn: number) {
     const tempOffset = offset + newOffset * pageShift,
           tempActualScroll = actualScroll + turn * pageShift;
 
-    if (tempActualScroll <= pagination!.totalPages && tempOffset >= 0) {
-      setOffset(tempOffset);
-      setActualScroll(tempActualScroll);
-    } else if (tempActualScroll > pagination!.totalPages && actualScroll < pagination!.totalPages) {
-      setOffset(offset + newOffset * (pagination!.totalPages - actualScroll));
-      setActualScroll(pagination!.totalPages);
-    } else if (actualScroll > pageShift) {
-      setOffset(0);
-      setActualScroll(pageShift);
-    } else if (actualScroll === pageShift && offset === 0 && newOffset < 0) {
-      setOffset(offset + -newOffset * (pagination!.totalPages - actualScroll));
-      setActualScroll(pagination!.totalPages);
+    if (pagination!.totalPages >= actualScroll && !loading) {
+      if (tempActualScroll <= pagination!.totalPages && tempOffset >= 0) {
+        setOffset(tempOffset);
+        setActualScroll(tempActualScroll);
+      } else if (tempActualScroll > pagination!.totalPages && actualScroll < pagination!.totalPages) {
+        setOffset(offset + newOffset * (pagination!.totalPages - actualScroll));
+        setActualScroll(pagination!.totalPages);
+      } else if (actualScroll > pageShift) {
+        setOffset(0);
+        setActualScroll(pageShift);
+      } else if (actualScroll === pageShift && offset === 0 && newOffset < 0) {
+        setOffset(offset + -newOffset * (pagination!.totalPages - actualScroll));
+        setActualScroll(pagination!.totalPages);
+      }
     }
   }
   function turnPage(page: number) {
@@ -47,6 +49,9 @@ const GroupNumeration: React.FC = () => {
       setPageShift(Math.round((targetRef.current!.clientWidth - 50) / 50));
     }
   }, [targetRef, setActualScroll, setPageShift]);
+  useEffect(() => {
+    setOffset(0);
+  }, [pagination?.totalPages, setOffset]);
       
   return (
     <div className="group__numeration">

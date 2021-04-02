@@ -18,6 +18,9 @@ const Navigation: React.FC = () => {
           <Link to="/groups" className="navigation__item">
             <div className="navigation__text">Группы</div>
           </Link>
+          <Link to="/errors" className="navigation__item">
+            <div className="navigation__text">Ошибки</div>
+          </Link>
           {store.userStore.isLoggedIn ?
           <div className="navigation__user">
             <div className="navigation__user-wrapper" onClick={() => setShowMenu(!showMenu)}>

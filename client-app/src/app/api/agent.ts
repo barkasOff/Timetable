@@ -1,4 +1,6 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import { toast } from 'react-toastify';
+import { history } from '../..';
 import { IGroup } from '../models/group';
 import { PaginatedResult } from '../models/pagination';
 import { IUser, IUserForm } from '../models/user';
@@ -21,19 +23,48 @@ axios.interceptors.request.use(config => {
   return (config);
 });
 axios.interceptors.response.use(async response => {
-  try {
-    await sleep(1000);
-    const pagination = response.headers['pagination'];
+  await sleep(1000);
+  const pagination = response.headers['pagination'];
 
-    if (pagination) {
-      response.data = new PaginatedResult(response.data, JSON.parse(pagination));
-      return response as AxiosResponse<PaginatedResult<any>>;
-    }
-    return response;
-  } catch (error) {
-    console.log(error);
-    return await (Promise.reject(error));
+  if (pagination) {
+    response.data = new PaginatedResult(response.data, JSON.parse(pagination));
+    return response as AxiosResponse<PaginatedResult<any>>;
   }
+  return response;
+}, (error: AxiosError) => {
+  const { data, status, config } = error.response!;
+
+  switch (status) {
+    case 400:
+      if (typeof data === 'string') {
+        toast.error(data);
+      }
+      if (config.method === 'get' && data.errors.hasOwnProperty('id')) {
+        history.push('/not-found');
+      }
+      if (data.errors) {
+        const modalStateErros = [];
+
+        for (const key in data.errors) {
+          if (data.errors[key]) {
+            modalStateErros.push(data.errors[key]);
+          }
+        }
+        throw modalStateErros.flat();
+      }
+      break;
+    case 401:
+      toast.error('Unauthorised');
+      break;
+    case 404:
+      history.push('/not-found');
+      break;
+    case 500:
+      store.commonStore.setServerError(data);
+      history.push('/server-error');
+      break;
+  }
+  return Promise.reject(error);
 });
 
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;

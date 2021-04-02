@@ -22,6 +22,9 @@
     align-items: center;
     margin-left: 50px;
     transition: transform .3s;
+    &-fst {
+      transition: none !important; 
+    }
   }
   &__arrow {
     width: 50px;
