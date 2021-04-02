@@ -1,24 +1,35 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useRef, useState } from 'react';
+import Loading from '../../../app/layout/Loading/Loading';
 import { PagingParams } from '../../../app/models/pagination';
 import { useStore } from '../../../app/stores/store';
 
 const GroupNumeration: React.FC = () => {
   const { subjectStore } = useStore(),
-        { setLoading, setPagingParams, pagination, clearGroups, loadGroups, loading } = subjectStore;
+        { setLoading, setPagingParams, pagination, clearGroups, loadGroups, loading, selectedGroupsRegystry } = subjectStore;
   const numbers = Array.from(Array(pagination ? pagination!.totalPages : 0).keys());
   const [offset, setOffset] = useState(0);
   const [actualScroll, setActualScroll] = useState(-1);
+  const [pageShift, setPageShift] = useState(-1);
   const [actualPage, setActualPage] = useState(1);
   const targetRef = useRef<HTMLDivElement>(null);
 
   function scrollScrollBar(newOffset: number, turn: number) {
-    const tempOffset = offset + newOffset,
-          tempActualPage = actualScroll + turn;
+    const tempOffset = offset + newOffset * pageShift,
+          tempActualScroll = actualScroll + turn * pageShift;
 
-    if (tempActualPage <= pagination!.totalPages && tempOffset >= 0) {
+    if (tempActualScroll <= pagination!.totalPages && tempOffset >= 0) {
       setOffset(tempOffset);
-      setActualScroll(tempActualPage);
+      setActualScroll(tempActualScroll);
+    } else if (tempActualScroll > pagination!.totalPages && actualScroll < pagination!.totalPages) {
+      setOffset(offset + newOffset * (pagination!.totalPages - actualScroll));
+      setActualScroll(pagination!.totalPages);
+    } else if (actualScroll > pageShift) {
+      setOffset(0);
+      setActualScroll(pageShift);
+    } else if (actualScroll === pageShift && offset === 0 && newOffset < 0) {
+      setOffset(offset + -newOffset * (pagination!.totalPages - actualScroll));
+      setActualScroll(pagination!.totalPages);
     }
   }
   function turnPage(page: number) {
@@ -31,37 +42,44 @@ const GroupNumeration: React.FC = () => {
     }
   }
   useEffect(() => {
-    setActualScroll(Math.round((targetRef.current!.clientWidth - 50) / 50));
-  }, [targetRef, setActualScroll]);
-        
+    if (targetRef && targetRef.current) {
+      setActualScroll(Math.round((targetRef.current!.clientWidth - 50) / 50));
+      setPageShift(Math.round((targetRef.current!.clientWidth - 50) / 50));
+    }
+  }, [targetRef, setActualScroll, setPageShift]);
+      
   return (
     <div className="group__numeration">
-    <button
-      className="btn-num group__arrow group__arrow-left"
-      onClick={() => scrollScrollBar(-50, -1)}>
-        <img src="assets/leftChoose.svg" alt="leftChoose"/>
-    </button>
-    <div
-      ref={targetRef}
-      className="group__numbers"
-      style={{transform: `translateX(-${offset}px)`}}>
-      {numbers.map(i => {
-        const classes = ['btn-num'];
+      <button
+        className="btn-num group__arrow group__arrow-left"
+        onClick={() => scrollScrollBar(-50, -1)}>
+          <img src="assets/leftChoose.svg" alt="leftChoose"/>
+      </button>
+      {selectedGroupsRegystry.size === 0 && !loading || pagination!.totalPages === 0 && loading ?
+        <div className="group__error group__error-top">
+          Нет групп, удовлетворяющих вашему запросу : &#40;
+        </div> : 
+        <div
+          ref={targetRef}
+          className="group__numbers"
+          style={{transform: `translateX(-${offset}px)`}}>
+          {numbers.map(i => {
+            const classes = ['btn-num'];
 
-        if (i + 1 === actualPage) {
-          classes.push('btn-num-active');
-        }
-        return (<button
-          key={i}
-          className={classes.join(' ')}
-          onClick={() => turnPage(i + 1)}>{i + 1}</button>);
-      })}
-    </div>
-    <button
-      className="btn-num group__arrow group__arrow-right"
-      onClick={() => scrollScrollBar(50, 1)}>
-      <img src="assets/rightChoose.svg" alt="rightChoose"/>
-    </button>
+            if (i + 1 === actualPage) {
+              classes.push('btn-num-active');
+            }
+            return (<button
+              key={i}
+              className={classes.join(' ')}
+              onClick={() => turnPage(i + 1)}>{i + 1}</button>);
+          })}
+        </div>}
+      <button
+        className="btn-num group__arrow group__arrow-right"
+        onClick={() => scrollScrollBar(50, 1)}>
+        <img src="assets/rightChoose.svg" alt="rightChoose"/>
+      </button>
     </div>
   );
 };

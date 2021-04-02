@@ -32,8 +32,11 @@ namespace Persistence
 
       var groups = new List<Group>();
 
-      for (int i = 4301; i <= 4344; ++i)
+      groups.Add(new Group { Number = "Bonus" });
+      for (int i = 1301; i <= 5344; ++i)
       {
+        if (i % 100 == 45)
+          i += 1000 - 44;
         groups.Add(
           new Group
           {

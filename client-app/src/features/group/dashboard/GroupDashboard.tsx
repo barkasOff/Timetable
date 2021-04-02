@@ -6,6 +6,7 @@ import { useStore } from '../../../app/stores/store';
 import GroupList from './GroupList';
 import GroupNumeration from './GroupNumeration';
 import GroupPreview from './GroupPreview';
+import GroupSearch from './GroupSearch';
 
 const GroupDashboard: React.FC = () => {
   const { subjectStore } = useStore(),
@@ -24,6 +25,7 @@ const GroupDashboard: React.FC = () => {
       <div className="group__control">
         <div className="group__sidebar">
           <GroupNumeration />
+          <GroupSearch />
           <GroupList />
         </div>
         <GroupPreview />

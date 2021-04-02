@@ -6,22 +6,30 @@ import { useStore } from '../../../app/stores/store';
 
 const GroupList: React.FC = () => {
   const { subjectStore } = useStore(),
-        { loading } = subjectStore;
+        { loading, selectedGroupsRegystry, getGroups, loadGroup } = subjectStore;
         
   if (loading) {
-    return <Loading content='Загрузка групп...' />
+    return (
+      <div className="group__list">
+        <Loading content='Загрузка групп...' />
+      </div>
+    );
   }
   return (
     <div className="group__list">
-      {subjectStore.getGroups.map(group => (
-        <Link
-          key={group.id}
-          className="group__item"
-          onMouseEnter={() => subjectStore.loadGroup(group.id)}
-          to={`/groups/${group.id}`}>
-          {group.number}
-        </Link>
-      ))}
+      {selectedGroupsRegystry.size == 0 ?
+        <div className="group__error">
+          Нет групп, удовлетворяющих вашему запросу : &#40;
+        </div>
+        : getGroups.map(group => (
+          <Link
+            key={group.id}
+            className="group__item"
+            onMouseEnter={() => loadGroup(group.id)}
+            to={`/groups/${group.id}`}>
+            {group.number}
+          </Link>
+        ))}
     </div>
   );
 };

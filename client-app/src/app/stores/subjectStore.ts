@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable, reaction, runInAction } from "mobx";
 import agent from "../api/agent";
 import { IDay, IGroup, ISubject } from "../models/group";
 import { IPagination, PagingParams } from "../models/pagination";
@@ -11,9 +11,19 @@ export default class  SubjectStore {
   selectedGroup: IGroup | undefined = undefined;
   pagination: IPagination | null = null;
   pagingParams = new PagingParams();
+  predicate = new Map().set('all', true);
 
   constructor() {
     makeAutoObservable(this);
+
+    reaction(
+      () => this.predicate.keys(),
+      () => {
+        this.pagingParams = new PagingParams();
+        this.clearGroups();
+        this.loadGroups();
+      }
+    );
   }
 
   setLoading = (value: boolean) => {
@@ -24,8 +34,25 @@ export default class  SubjectStore {
     this.pagingParams = pagingParams;
   }
 
+  setPredicate = (predicate: string, value: string) => {
+    const resetPredicate = () => {
+      this.predicate.forEach((value, key) => this.predicate.delete(key));
+    }
+
+    switch (predicate) {
+      case 'all':
+        resetPredicate();
+        this.predicate.set(predicate, value);
+        break;
+      case 'label':
+        resetPredicate();
+        this.predicate.set(predicate, value);
+        break;
+    }
+  }
+
   loadGroups = async (): Promise<void> => {
-    this.setLoadingInitial(true);
+    this.allGroupsRegystry.size > 0 ? this.setLoading(true) : this.setLoadingInitial(true);
     try {
       const result = await agent.Groups.list(this.axiosParams);
 
@@ -36,9 +63,11 @@ export default class  SubjectStore {
         });
       });
       this.setPagination(result.pagination);
+      this.setLoading(false);
       this.setLoadingInitial(false);
     } catch(error) {
       console.log(error);
+      this.setLoading(false);
       this.setLoadingInitial(false);
     }
   }
@@ -92,6 +121,7 @@ export default class  SubjectStore {
 
     params.append('pageNumber', this.pagingParams.pageNumber.toString());
     params.append('pageSize', this.pagingParams.pageSize.toString());
+    this.predicate.forEach((value, key) => params.append(key, value));
     return (params);
   }
 
