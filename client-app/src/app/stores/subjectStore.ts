@@ -12,6 +12,10 @@ export default class  SubjectStore {
   pagination: IPagination | null = null;
   pagingParams = new PagingParams();
   predicate = new Map().set('all', true);
+  actualPage = 1;
+  offset = 0;
+  totalPages = 0;
+  filter = "";
 
   constructor() {
     makeAutoObservable(this);
@@ -24,6 +28,22 @@ export default class  SubjectStore {
         this.loadGroups();
       }
     );
+  }
+
+  setFilter  = (value: string) =>{
+    this.filter = value;
+  }
+
+  setTotalPages  = (value: number) =>{
+    this.totalPages = value;
+  }
+
+  setActualPage = (value: number) =>{
+    this.actualPage = value;
+  }
+
+  setOffset = (value: number) =>{
+    this.offset = value;
   }
 
   setLoading = (value: boolean) => {

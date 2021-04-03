@@ -10,13 +10,13 @@ import GroupSearch from './GroupSearch';
 
 const GroupDashboard: React.FC = () => {
   const { subjectStore } = useStore(),
-        { loadGroups, selectedGroupsRegystry: groupsRegystry } = subjectStore;
+        { loadGroups, selectedGroupsRegystry: groupsRegystry, allGroupsRegystry } = subjectStore;
 
   useEffect(() => {
-    if (groupsRegystry.size <= 1) {
+    if (groupsRegystry.size <= 1 && allGroupsRegystry.size <= 1) {
       loadGroups();
     }
-  }, [groupsRegystry.size, loadGroups]);
+  }, [groupsRegystry.size, allGroupsRegystry.size, loadGroups]);
   if (subjectStore.loadingInitial && !subjectStore.loading) {
     return <Loading content='Загрузка списка групп...' />
   }

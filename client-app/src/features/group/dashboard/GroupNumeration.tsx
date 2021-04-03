@@ -6,12 +6,10 @@ import { useStore } from '../../../app/stores/store';
 const GroupNumeration: React.FC = () => {
   const { subjectStore } = useStore(),
         { setLoading, setPagingParams, pagination,
-          clearGroups, loadGroups, loading, selectedGroupsRegystry } = subjectStore,
+          clearGroups, loadGroups, loading, selectedGroupsRegystry, offset, setOffset, actualPage, setActualPage, totalPages, setTotalPages } = subjectStore,
         numbers = Array.from(Array(pagination ? pagination!.totalPages : 0).keys()),
-        [offset, setOffset] = useState(0),
         [actualScroll, setActualScroll] = useState(0),
         [pageShift, setPageShift] = useState(0),
-        [actualPage, setActualPage] = useState(1),
         targetRef = useRef<HTMLDivElement>(null);
 
   function scrollScrollBar(newOffset: number, turn: number) {
@@ -50,8 +48,18 @@ const GroupNumeration: React.FC = () => {
     }
   }, [targetRef, setActualScroll, setPageShift]);
   useEffect(() => {
-    setOffset(0);
-  }, [pagination?.totalPages, setOffset]);
+    if (pagination && pagination.totalPages) {
+      if (totalPages != pagination!.totalPages) {
+        setOffset(0);
+        setActualPage(1);
+      }
+      setTotalPages(pagination!.totalPages);
+    }
+    if (targetRef && targetRef.current) {
+      setActualScroll(Math.round((targetRef.current!.clientWidth - 50) / 50));
+      setPageShift(Math.round((targetRef.current!.clientWidth - 50) / 50));
+    }
+  }, [pagination?.totalPages, setOffset, targetRef, setActualScroll, setPageShift, setTotalPages, totalPages]);
       
   return (
     <div className="group__numeration">

@@ -47,7 +47,7 @@ const App: React.FC = () => {
                 <Route path='/profile' component={ProfilePage} />
                 <Route path='/errors' component={TestErrors} />
                 <Route path='/server-error' component={ServerError} />
-                <Route path='/not-found' component={NotFound} />
+                <Route component={NotFound} />
               </Switch>
             </div>
           </>

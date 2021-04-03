@@ -3,19 +3,20 @@ import React, { useState } from 'react';
 import { useStore } from '../../../app/stores/store';
 
 const GroupSearch: React.FC = () => {
-  const { subjectStore } = useStore(),
-        [filter, setFilter] = useState("");
+  const { subjectStore } = useStore();
         
   const searchItem = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    subjectStore.setPredicate('label', filter);
+    subjectStore.setPredicate('label', subjectStore.filter);
   }
   return (
     <div className="group__search">
       <input
         type="text"
-        onChange={(e) => setFilter(e.target.value)}
+        onChange={(e) => subjectStore.setFilter(e.target.value)}
+        onFocus={(e) => e.target.select()}
+        value={subjectStore.filter}
         placeholder='Введите нужную группу:'
         className="group__input" />
       <button
